@@ -13,9 +13,9 @@ const PrefectureCheckList = ({
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
 
   return (
-    <ul>
+    <ul className={styles.prefectures}>
       {prefectures.map((prefecture) => (
-        <li key={prefecture.code}>
+        <li className={styles.prefecture} key={prefecture.code}>
           <CheckBox
             label={prefecture.name}
             checked={checkedIndexes.includes(prefecture.code)}
