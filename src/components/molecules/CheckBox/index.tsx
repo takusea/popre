@@ -6,14 +6,14 @@ import Text from "@/components/atoms/Text";
 interface CheckBoxProps {
   label: string;
   checked: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   onClick: () => void;
 }
 
 const CheckBox = ({
   label,
   checked,
-  disabled,
+  disabled = false,
   onClick,
 }: CheckBoxProps): JSX.Element => {
   return (
