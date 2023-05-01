@@ -2,8 +2,14 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 
+import PrefectureCheckList from "@/components/organisms/PrefectureCheckList";
+import { fetchPrefectures } from "@/lib/resas";
 
-export default function Home() {
+interface Props {
+  prefectures: Prefecture[];
+}
+
+export default function Home({ prefectures }: Props) {
   return (
     <>
       <Head>
@@ -12,7 +18,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <main className={styles.main}>
+        <h2>都道府県一覧</h2>
+        <PrefectureCheckList prefectures={prefectures} />
       </main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const prefectures = await fetchPrefectures();
+  return {
+    props: { prefectures },
+  };
 }
