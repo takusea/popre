@@ -7,9 +7,20 @@ import { fetchPrefectures } from "@/lib/resas";
 
 interface Props {
   prefectures: Prefecture[];
+  populations: PopulationTransition[];
 }
 
-export default function Home({ prefectures }: Props) {
+export default function Home({ prefectures, populations }: Props) {
+  const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
+
+  const toggleCheckedIndexes = (prefCode: number) => {
+    if (checkedIndexes.includes(prefCode)) {
+      setCheckedIndexes(checkedIndexes.filter((code) => code !== prefCode));
+    } else {
+      setCheckedIndexes([...checkedIndexes, prefCode]);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -21,6 +32,11 @@ export default function Home({ prefectures }: Props) {
       <main className={styles.main}>
         <h2>都道府県一覧</h2>
         <PrefectureCheckList prefectures={prefectures} />
+        <PrefectureCheckList
+          prefectures={prefectures}
+          checkedIndexes={checkedIndexes}
+          onChange={(prefCode) => toggleCheckedIndexes(prefCode)}
+        />
       </main>
     </>
   );

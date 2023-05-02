@@ -5,13 +5,15 @@ import CheckBox from "@/components/molecules/CheckBox";
 
 interface PrefectureCheckListProps {
   prefectures: Prefecture[];
+  checkedIndexes: number[];
+  onChange: (prefCode: number) => void;
 }
 
 const PrefectureCheckList = ({
   prefectures,
+  checkedIndexes = [],
+  onChange,
 }: PrefectureCheckListProps): JSX.Element => {
-  const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
-
   return (
     <ul className={styles.prefectures}>
       {prefectures.map((prefecture) => (
@@ -19,15 +21,7 @@ const PrefectureCheckList = ({
           <CheckBox
             label={prefecture.name}
             checked={checkedIndexes.includes(prefecture.code)}
-            onClick={() => {
-              if (checkedIndexes.includes(prefecture.code)) {
-                setCheckedIndexes(
-                  checkedIndexes.filter((code) => code !== prefecture.code)
-                );
-              } else {
-                setCheckedIndexes([...checkedIndexes, prefecture.code]);
-              }
-            }}
+            onClick={() => onChange(prefecture.code)}
           />
         </li>
       ))}
