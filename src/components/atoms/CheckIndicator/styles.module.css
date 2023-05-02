@@ -5,24 +5,24 @@
 .check_indicator {
   width: 24px;
   height: 24px;
-  background-color: #fff;
+  background-color: var(--c-white);
   border-radius: 4px;
   display: grid;
   place-content: center;
-  border: 1px solid #aaa;
+  border: 1px solid var(--c-border);
 }
 
 .check_indicator.is_disabled {
-  background-color: #ddd;
+  background-color: var(--c-disabled);
 }
 
 .check_indicator.is_checked {
-  background-color: #344232;
+  background-color: var(--c-primary);
   border: none;
 }
 
 .check_indicator__icon {
-  color: #fff;
+  color: var(--c-white);
 }
 
 .check_indicator:not(.is_checked) .check_indicator__icon {

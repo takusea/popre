@@ -1,0 +1,7 @@
+.text {
+  color: var(--c-text);
+}
+
+.text.is_bold {
+  font-weight: 600;
+}
