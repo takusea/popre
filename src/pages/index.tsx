@@ -124,7 +124,7 @@ export default function Home({ prefectures }: Props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   });
