@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 
 import PrefectureCheckList from "@/components/organisms/PrefectureCheckList";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import {
   LineChart,
@@ -20,50 +20,48 @@ interface Props {
   prefectures: Prefecture[];
 }
 
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+});
+
 export default function Home({ prefectures }: Props) {
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
   const [populations, setPopulations] = useState([]);
   const [populationType, setPopulationType] = useState<number>(0);
 
-  useEffect(() => {
-    async function fetchData() {
-      const api = axios.create({
-        baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  const fetchData = useCallback(async () => {
+    const pop = await Promise.all(
+      checkedIndexes.map(async (checkedIndex) => {
+        const response = await api.get(
+          `/population?prefCode=${checkedIndex}&populationType=${populationType}`
+        );
+
+        return response.data;
+      })
+    );
+
+    const result = pop.reduce((acc, curr) => {
+      curr.data.forEach((item: { year: string; value: number }) => {
+        const found = acc.find((el: { year: string }) => el.year === item.year);
+        if (found) {
+          found[prefectures[curr.prefCode - 1].name] = item.value;
+        } else {
+          acc.push({
+            year: item.year,
+            [prefectures[curr.prefCode - 1].name]: item.value,
+          });
+        }
       });
 
-      const pop = await Promise.all(
-        checkedIndexes.map(async (checkedIndex) => {
-          const response = await api.get(
-            `/population?prefCode=${checkedIndex}&populationType=${populationType}`
-          );
+      return acc;
+    }, []);
 
-          return response.data;
-        })
-      );
+    setPopulations(result);
+  }, [checkedIndexes, populationType, prefectures]);
 
-      const result = pop.reduce((acc, curr) => {
-        curr.data.forEach((item: { year: string; value: number }) => {
-          const found = acc.find(
-            (el: { year: string }) => el.year === item.year
-          );
-          if (found) {
-            found[prefectures[curr.prefCode - 1].name] = item.value;
-          } else {
-            acc.push({
-              year: item.year,
-              [prefectures[curr.prefCode - 1].name]: item.value,
-            });
-          }
-        });
-
-        return acc;
-      }, []);
-
-      setPopulations(result);
-    }
+  useEffect(() => {
     fetchData();
-
-  }, [checkedIndexes, populationType]);
+  }, [fetchData]);
 
   const toggleCheckedIndexes = (prefCode: number) => {
     if (checkedIndexes.includes(prefCode)) {
