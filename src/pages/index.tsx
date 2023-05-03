@@ -15,19 +15,20 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import PopulationTypeChips from "@/components/organisms/PopulationTypeChips";
+import { resas } from "@/lib/resas";
 
 interface Props {
   prefectures: Prefecture[];
 }
 
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-});
-
 export default function Home({ prefectures }: Props) {
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
   const [populations, setPopulations] = useState([]);
   const [populationType, setPopulationType] = useState<number>(0);
+
+  const api = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  });
 
   const fetchData = useCallback(async () => {
     const pop = await Promise.all(
@@ -57,7 +58,7 @@ export default function Home({ prefectures }: Props) {
     }, []);
 
     setPopulations(result);
-  }, [checkedIndexes, populationType, prefectures]);
+  }, [api, checkedIndexes, populationType, prefectures]);
 
   useEffect(() => {
     fetchData();
@@ -125,12 +126,16 @@ export default function Home({ prefectures }: Props) {
 }
 
 export async function getStaticProps() {
-  const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  });
+  const response = await resas.get("/prefectures");
 
-  const response = await api.get("/prefecture");
-  const prefectures = response.data;
+  const prefectures: Prefecture[] = response.data.result.map(
+    (result: { prefName: any; prefCode: any }) => {
+      return {
+        name: result.prefName,
+        code: result.prefCode,
+      };
+    }
+  );
 
   return {
     props: { prefectures },
