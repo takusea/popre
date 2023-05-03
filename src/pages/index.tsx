@@ -42,8 +42,10 @@ export default function Home({ prefectures }: Props) {
       );
 
       const result = pop.reduce((acc, curr) => {
-        curr.data.forEach((item) => {
-          const found = acc.find((el) => el.year === item.year);
+        curr.data.forEach((item: { year: string; value: number }) => {
+          const found = acc.find(
+            (el: { year: string }) => el.year === item.year
+          );
           if (found) {
             found[prefectures[curr.prefCode - 1].name] = item.value;
           } else {
