@@ -60,7 +60,7 @@ export default function Home({ prefectures }: Props) {
       setPopulations(result);
     }
     fetchData();
-    console.log(populations);
+
   }, [checkedIndexes, populationType]);
 
   const toggleCheckedIndexes = (prefCode: number) => {
