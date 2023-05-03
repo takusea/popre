@@ -28,7 +28,7 @@ export default function Home({ prefectures }: Props) {
   useEffect(() => {
     async function fetchData() {
       const api = axios.create({
-        baseURL: "http://localhost:3000/api",
+        baseURL: process.env.NEXT_PUBLIC_BASE_URL,
       });
 
       const pop = await Promise.all(
@@ -120,7 +120,7 @@ export default function Home({ prefectures }: Props) {
 
 export async function getServerSideProps() {
   const api = axios.create({
-    baseURL: "http://localhost:3000/api",
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   });
 
   const response = await api.get("/prefecture");
