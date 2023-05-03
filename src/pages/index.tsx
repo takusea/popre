@@ -26,11 +26,11 @@ export default function Home({ prefectures }: Props) {
   const [populations, setPopulations] = useState([]);
   const [populationType, setPopulationType] = useState<number>(0);
 
-  const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  });
-
   const fetchData = useCallback(async () => {
+    const api = axios.create({
+      baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    });
+
     const pop = await Promise.all(
       checkedIndexes.map(async (checkedIndex) => {
         const response = await api.get(
@@ -58,7 +58,7 @@ export default function Home({ prefectures }: Props) {
     }, []);
 
     setPopulations(result);
-  }, [api, checkedIndexes, populationType, prefectures]);
+  }, [checkedIndexes, populationType, prefectures]);
 
   useEffect(() => {
     fetchData();
