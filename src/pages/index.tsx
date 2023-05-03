@@ -13,7 +13,6 @@ import {
   CartesianGrid,
   Legend,
 } from "recharts";
-import Chip from "@/components/atoms/Chip";
 import PopulationTypeChips from "@/components/organisms/PopulationTypeChips";
 
 interface Props {
