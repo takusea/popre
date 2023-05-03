@@ -45,11 +45,11 @@ export default function Home({ prefectures }: Props) {
         curr.data.forEach((item) => {
           const found = acc.find((el) => el.year === item.year);
           if (found) {
-            found[prefectures[curr.prefCode].name] = item.value;
+            found[prefectures[curr.prefCode - 1].name] = item.value;
           } else {
             acc.push({
               year: item.year,
-              [prefectures[curr.prefCode].name]: item.value,
+              [prefectures[curr.prefCode - 1].name]: item.value,
             });
           }
         });
