@@ -3,3 +3,17 @@
   margin: auto;
   min-height: 100vh;
 }
+
+.section {
+  margin-bottom: 32px;
+  padding: 16px;
+}
+
+.section__heading {
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.section__inner {
+  margin-bottom: 16px;
+}

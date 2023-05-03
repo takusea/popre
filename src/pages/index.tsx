@@ -12,6 +12,7 @@ import {
   Tooltip,
   CartesianGrid,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
 import PopulationTypeChips from "@/components/organisms/PopulationTypeChips";
 
@@ -79,39 +80,45 @@ export default function Home({ prefectures }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h2>都道府県一覧</h2>
-        <PrefectureCheckList
-          prefectures={prefectures}
-          checkedIndexes={checkedIndexes}
-          onChange={(prefCode) => toggleCheckedIndexes(prefCode)}
-        />
-        <h2>人口推移</h2>
-        <PopulationTypeChips
-          currentIndex={populationType}
-          onChange={(index) => setPopulationType(index)}
-        />
-        <LineChart
-          width={1080}
-          height={320}
-          data={populations}
-          margin={{ top: 16, right: 32, left: 64, bottom: 16 }}
-        >
-          {checkedIndexes.map((checkedIndex) => (
-            <Line
-              key={checkedIndex}
-              type="monotone"
-              dataKey={prefectures[checkedIndex].name}
-              stroke={`hsl(${Math.round(Math.random() * 360)}, 50%, 50%)`}
-              strokeWidth={2}
-              yAxisId={1}
+        <section className={styles.section}>
+          <h2 className={styles.section__heading}>都道府県一覧</h2>
+          <PrefectureCheckList
+            prefectures={prefectures}
+            checkedIndexes={checkedIndexes}
+            onChange={(prefCode) => toggleCheckedIndexes(prefCode)}
+          />
+        </section>
+        <section className={styles.section}>
+          <h2 className={styles.section__heading}>人口推移</h2>
+          <div className={styles.section__inner}>
+            <PopulationTypeChips
+              currentIndex={populationType}
+              onChange={(index) => setPopulationType(index)}
             />
-          ))}
-          <XAxis dataKey="year" />
-          <YAxis yAxisId={1} />
-          <Legend />
-          <Tooltip />
-          <CartesianGrid stroke="#f5f5f5" />
-        </LineChart>
+          </div>
+          <ResponsiveContainer width="100%" height={480}>
+            <LineChart
+              data={populations}
+              margin={{ top: 16, right: 32, left: 64 }}
+            >
+              {checkedIndexes.map((checkedIndex) => (
+                <Line
+                  key={checkedIndex}
+                  type="monotone"
+                  dataKey={prefectures[checkedIndex - 1].name}
+                  stroke={`hsl(${Math.round(Math.random() * 360)}, 50%, 50%)`}
+                  strokeWidth={2}
+                  yAxisId={1}
+                />
+              ))}
+              <XAxis dataKey="year" domain={[1960, 2045]} tickCount={10} />
+              <YAxis yAxisId={1} domain={[0, 16000000]} tickCount={10} />
+              <Legend />
+              <Tooltip />
+              <CartesianGrid stroke="#f5f5f5" />
+            </LineChart>
+          </ResponsiveContainer>
+        </section>
       </main>
     </>
   );
