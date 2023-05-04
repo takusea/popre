@@ -28,7 +28,8 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "BIZ UDPGothic", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "BIZ UDPGothic", sans-serif;
   letter-spacing: 0.05em;
   line-height: 1.75;
   color: var(--c-text);
