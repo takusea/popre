@@ -13,7 +13,12 @@ const CheckIndicator = ({
 }: CheckIndicatorProps): JSX.Element => {
   return (
     <>
-      <input className={styles.input} type="checkbox" checked={checked}></input>
+      <input
+        className={styles.input}
+        type="checkbox"
+        checked={checked}
+        readOnly
+      ></input>
       <div
         className={`
           ${styles.check_indicator}
