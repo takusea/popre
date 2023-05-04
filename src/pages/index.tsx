@@ -1,7 +1,7 @@
 import Head from "next/head";
+
 import styles from "@/styles/Home.module.css";
 
-import PrefectureCheckList from "@/components/organisms/PrefectureCheckList";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -14,8 +14,11 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import PopulationTypeChips from "@/components/organisms/PopulationTypeChips";
+
 import { resas } from "@/lib/resas";
+
+import PrefectureCheckList from "@/components/organisms/PrefectureCheckList";
+import PopulationTypeChips from "@/components/organisms/PopulationTypeChips";
 
 interface Props {
   prefectures: Prefecture[];
