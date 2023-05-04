@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { resas } from "@/lib/resas";
+import { Prefecture } from "@/types/Prefecture";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,7 +10,7 @@ export default async function handler(
   const response = await resas.get("/prefectures");
 
   const prefectures: Prefecture[] = response.data.result.map(
-    (result: { prefName: any; prefCode: any }) => {
+    (result: { prefName: string; prefCode: number }) => {
       return {
         name: result.prefName,
         code: result.prefCode,

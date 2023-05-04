@@ -16,6 +16,7 @@ import {
 } from "recharts";
 
 import { resas } from "@/lib/resas";
+import { Prefecture } from "@/types/Prefecture";
 
 import PrefectureCheckList from "@/components/organisms/PrefectureCheckList";
 import PopulationTypeChips from "@/components/organisms/PopulationTypeChips";
@@ -135,7 +136,7 @@ export async function getStaticProps() {
   const response = await resas.get("/prefectures");
 
   const prefectures: Prefecture[] = response.data.result.map(
-    (result: { prefName: any; prefCode: any }) => {
+    (result: { prefName: string; prefCode: number }) => {
       return {
         name: result.prefName,
         code: result.prefCode,
