@@ -1,13 +1,13 @@
 .chip {
   height: 40px;
   padding: 0 16px;
+  font-weight: 600;
   background-color: var(--c-primary-light);
   border: 1px solid var(--c-primary);
   border-radius: 20px;
-  font-weight: 600;
 }
 
 .chip.is_checked {
-  background-color: var(--c-primary);
   color: var(--c-white);
+  background-color: var(--c-primary);
 }

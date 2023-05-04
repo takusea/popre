@@ -1,17 +1,17 @@
 .main {
   max-width: 1080px;
-  margin: auto;
   min-height: 100vh;
+  margin: auto;
 }
 
 .section {
-  margin-bottom: 32px;
   padding: 16px;
+  margin-bottom: 32px;
 }
 
 .section__heading {
-  font-weight: 700;
   margin-bottom: 16px;
+  font-weight: 700;
 }
 
 .section__inner {

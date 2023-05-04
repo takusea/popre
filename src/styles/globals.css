@@ -2,19 +2,16 @@
   --c-primary: #41c3cf;
   --c-primary-light: #cfedf1;
   --c-primary-dark: #14a2bb;
-
   --c-warning: #e74934;
-
-  --c-black: #111111;
+  --c-black: #111;
   --c-gray-90: #252525;
   --c-gray-80: #383838;
   --c-gray-70: #3b3b3b;
   --c-gray-30: #a1a1a1;
-  --c-gray-20: #cccccc;
+  --c-gray-20: #ccc;
   --c-gray-10: #e9e9e9;
   --c-gray-05: #f8f8f8;
   --c-white: #fff;
-
   --c-text: var(--c-gray-90);
   --c-link: var(--c-primary-dark);
   --c-back: var(--c-white);
@@ -28,13 +25,13 @@ html {
 }
 
 body {
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
   font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
     "BIZ UDPGothic", sans-serif;
-  letter-spacing: 0.05em;
   line-height: 1.75;
   color: var(--c-text);
-  overscroll-behavior-y: none;
-  overflow-x: hidden;
+  letter-spacing: 0.05em;
   background-color: var(--c-back);
 }
 
