@@ -18,6 +18,7 @@ const CheckIndicator = ({
       className={`${styles.chip} ${checked ? styles.is_checked : ""}`}
       onClick={onClick}
     >
+      {checked ? <Check /> : ""}
       {children}
     </button>
   );
