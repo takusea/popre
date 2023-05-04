@@ -1,5 +1,7 @@
 import styles from "./styles.module.css";
 
+import { Prefecture } from "@/types/Prefecture";
+
 import CheckBox from "@/components/molecules/CheckBox";
 
 interface PrefectureCheckListProps {

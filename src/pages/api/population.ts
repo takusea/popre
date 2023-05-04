@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { resas } from "@/lib/resas";
+import { PopulationTransition } from "@/types/Population";
 
 export default async function handler(
   req: NextApiRequest,
