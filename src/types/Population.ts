@@ -1,9 +1,9 @@
-interface PopulationTransition {
+export interface PopulationTransition {
   data: Population[];
   prefCode: number;
 }
 
-interface Population {
+export interface Population {
   year: number;
   value: number;
 }
