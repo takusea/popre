@@ -58,7 +58,7 @@ const PopulationGraph = ({
           <XAxis dataKey="year" domain={[1960, 2045]} tickCount={10}>
             <Label value="年度" offset={30} position="right" />
           </XAxis>
-          <YAxis yAxisId={1} domain={[0, 1500]} tickCount={10}>
+          <YAxis yAxisId={1} tickCount={10}>
             <Label value="人口（万）" offset={24} position="top" />
           </YAxis>
           <Legend />
