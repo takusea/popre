@@ -15,7 +15,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { resas } from "@/lib/resas";
+import { fetchPrefectures } from "@/lib/resas";
 import { Prefecture } from "@/types/Prefecture";
 
 import PrefectureCheckList from "@/components/organisms/PrefectureCheckList";
@@ -133,16 +133,7 @@ export default function Home({ prefectures }: Props) {
 }
 
 export async function getStaticProps() {
-  const response = await resas.get("/prefectures");
-
-  const prefectures: Prefecture[] = response.data.result.map(
-    (result: { prefName: string; prefCode: number }) => {
-      return {
-        name: result.prefName,
-        code: result.prefCode,
-      };
-    }
-  );
+  const prefectures: Prefecture[] = await fetchPrefectures();
 
   return {
     props: { prefectures },
