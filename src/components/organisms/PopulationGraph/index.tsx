@@ -1,6 +1,5 @@
 import styles from "./styles.module.css";
 
-import { useEffect, useState } from "react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Legend, Tooltip, CartesianGrid, Label } from "recharts";
 
 import { Prefecture } from "@/types/Prefecture";
@@ -8,7 +7,6 @@ import { PopulationTransition } from "@/types/Population";
 
 interface PopulationGraphProps {
   populations: PopulationTransition[];
-  checkedIndexes: number[];
   prefectures: Prefecture[];
 }
 
@@ -19,30 +17,23 @@ interface graphData {
 
 const PopulationGraph = ({
   populations,
-  checkedIndexes,
   prefectures,
 }: PopulationGraphProps): JSX.Element => {
-  const [graphData, setGraphData] = useState<graphData[]>([]);
+  const graphData: graphData[] = populations.reduce((acc: graphData[], current) => {
+    current.data.forEach((item) => {
+      const found = acc.find((el) => el.year === item.year);
+      if (found) {
+        found[prefectures[current.prefCode - 1].name] = item.value / 10000;
+      } else {
+        acc.push({
+          year: item.year,
+          [prefectures[current.prefCode - 1].name]: item.value / 10000,
+        });
+      }
+    });
 
-  useEffect(() => {
-    const data: graphData[] = populations.reduce((acc: graphData[], current) => {
-      current.data.forEach((item) => {
-        const found = acc.find((el) => el.year === item.year);
-        if (found) {
-          found[prefectures[current.prefCode - 1].name] = item.value / 10000;
-        } else {
-          acc.push({
-            year: item.year,
-            [prefectures[current.prefCode - 1].name]: item.value / 10000,
-          });
-        }
-      });
-
-      return acc;
-    }, []);
-
-    setGraphData(data)
-  }, [populations, prefectures])
+    return acc;
+  }, []);
 
   if(graphData.length > 0) {
     return (
@@ -51,12 +42,12 @@ const PopulationGraph = ({
           data={graphData}
           margin={{ top: 40, right: 64, left: 16 }}
         >
-          {checkedIndexes.map((checkedIndex) => (
+          {populations.map((population) => (
             <Line
-              key={checkedIndex}
+              key={population.prefCode}
               type="monotone"
-              dataKey={prefectures[checkedIndex - 1].name}
-              stroke={`hsl(${(checkedIndex / 47 * 360)}, 75%, 50%)`}
+              dataKey={prefectures[population.prefCode - 1].name}
+              stroke={`hsl(${(population.prefCode / 47 * 360)}, 75%, 50%)`}
               strokeWidth={2}
               yAxisId={1}
               animationDuration={200}
