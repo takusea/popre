@@ -18,6 +18,7 @@ import {
 import { fetchPrefectures } from "@/lib/resas";
 import { Prefecture } from "@/types/Prefecture";
 
+import Header from "@/components/organisms/Header";
 import PrefectureCheckList from "@/components/organisms/PrefectureCheckList";
 import PopulationTypeChips from "@/components/organisms/PopulationTypeChips";
 
@@ -87,6 +88,7 @@ export default function Home({ prefectures }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header />
       <main className={styles.main}>
         <section className={styles.section}>
           <h2 className={styles.section__heading}>都道府県一覧</h2>
