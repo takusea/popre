@@ -4,23 +4,15 @@ import styles from "@/styles/Home.module.css";
 
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 
 import { fetchPrefectures } from "@/lib/resas";
 import { Prefecture } from "@/types/Prefecture";
+import { PopulationTransition } from "@/types/Population";
 
 import Header from "@/components/organisms/Header";
 import PrefectureCheckList from "@/components/organisms/PrefectureCheckList";
 import PopulationTypeChips from "@/components/organisms/PopulationTypeChips";
+import PopulationGraph from "@/components/organisms/PopulationGraph";
 
 interface Props {
   prefectures: Prefecture[];
@@ -28,7 +20,7 @@ interface Props {
 
 export default function Home({ prefectures }: Props) {
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
-  const [populations, setPopulations] = useState([]);
+  const [populations, setPopulations] = useState<PopulationTransition[]>([]);
   const [populationType, setPopulationType] = useState<number>(0);
 
   const fetchData = useCallback(async () => {
@@ -36,7 +28,7 @@ export default function Home({ prefectures }: Props) {
       baseURL: process.env.NEXT_PUBLIC_BASE_URL,
     });
 
-    const pop = await Promise.all(
+    const pop: PopulationTransition[] = await Promise.all(
       checkedIndexes.map(async (checkedIndex) => {
         const response = await api.get(
           `/population?prefCode=${checkedIndex}&populationType=${populationType}`
@@ -46,24 +38,8 @@ export default function Home({ prefectures }: Props) {
       })
     );
 
-    const result = pop.reduce((acc, curr) => {
-      curr.data.forEach((item: { year: string; value: number }) => {
-        const found = acc.find((el: { year: string }) => el.year === item.year);
-        if (found) {
-          found[prefectures[curr.prefCode - 1].name] = item.value;
-        } else {
-          acc.push({
-            year: item.year,
-            [prefectures[curr.prefCode - 1].name]: item.value,
-          });
-        }
-      });
-
-      return acc;
-    }, []);
-
-    setPopulations(result);
-  }, [checkedIndexes, populationType, prefectures]);
+    setPopulations(pop);
+  }, [checkedIndexes, populationType]);
 
   useEffect(() => {
     fetchData();
@@ -106,28 +82,11 @@ export default function Home({ prefectures }: Props) {
               onChange={(index) => setPopulationType(index)}
             />
           </div>
-          <ResponsiveContainer width="100%" height={480}>
-            <LineChart
-              data={populations}
-              margin={{ top: 16, right: 32, left: 64 }}
-            >
-              {checkedIndexes.map((checkedIndex) => (
-                <Line
-                  key={checkedIndex}
-                  type="monotone"
-                  dataKey={prefectures[checkedIndex - 1].name}
-                  stroke={`hsl(${Math.round(Math.random() * 360)}, 50%, 50%)`}
-                  strokeWidth={2}
-                  yAxisId={1}
-                />
-              ))}
-              <XAxis dataKey="year" domain={[1960, 2045]} tickCount={10} />
-              <YAxis yAxisId={1} domain={[0, 16000000]} tickCount={10} />
-              <Legend />
-              <Tooltip />
-              <CartesianGrid stroke="#f5f5f5" />
-            </LineChart>
-          </ResponsiveContainer>
+          <PopulationGraph
+            populations={populations}
+            checkedIndexes={checkedIndexes}
+            prefectures={prefectures}
+          />
         </section>
       </main>
     </>
