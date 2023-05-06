@@ -34,20 +34,6 @@ export default function Home({ prefectures }: Props) {
     return response.data;
   }
 
-  const togglePopulations = async (prefCode: number) => {
-    const hasPrefecture = populations.some((population) => {
-      return population.prefCode === prefCode
-    });
-
-    if (hasPrefecture) {
-      setPopulations(populations.filter((population) => population.prefCode !== prefCode));
-    } else {
-      const population = await fetchPopulation(prefCode);
-
-      setPopulations([...populations, population]);
-    }
-  };
-
   return (
     <>
       <Head>
