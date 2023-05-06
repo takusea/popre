@@ -31,6 +31,5 @@ export const Default: Story = {
         code: 3
       }
     ],
-    checkedIndexes: [0]
   },
 };
