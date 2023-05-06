@@ -1,6 +1,11 @@
 export interface PopulationTransition {
-  data: Population[];
   prefCode: number;
+  populations: Populations[];
+}
+
+export interface Populations {
+  label: string;
+  data: Population[];
 }
 
 export interface Population {

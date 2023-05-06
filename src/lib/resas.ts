@@ -24,15 +24,15 @@ export const fetchPrefectures = async (): Promise<Prefecture[]> => {
   return prefectures;
 }
 
-export const fetchPopulations = async (prefCode: number, populationType: number): Promise<PopulationTransition> => {
+export const fetchPopulations = async (prefCode: number): Promise<PopulationTransition> => {
   const response = await resas.get(
     `/population/composition/perYear?prefCode=${prefCode}`
   );
 
-  const result = response.data.result.data[populationType];
+  const result = response.data.result.data;
 
   const populationTransition: PopulationTransition = {
-    data: result.data,
+    populations: result,
     prefCode: Number(prefCode),
   };
 

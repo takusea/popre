@@ -8,9 +8,8 @@ export default async function handler(
   res: NextApiResponse<PopulationTransition>
 ) {
   const prefCode = Number(req.query.prefCode);
-  const populationType = Number(req.query.populationType);
 
-  const populationTransition: PopulationTransition = await fetchPopulations(prefCode, populationType);
+  const populationTransition: PopulationTransition = await fetchPopulations(prefCode);
 
   res.status(200).json(populationTransition);
 }

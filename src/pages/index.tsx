@@ -28,7 +28,7 @@ export default function Home({ prefectures }: Props) {
     });
 
     const response = await api.get(
-      `/population?prefCode=${prefCode}&populationType=${populationType}`
+      `/population?prefCode=${prefCode}`
     );
 
     return response.data;
@@ -72,6 +72,7 @@ export default function Home({ prefectures }: Props) {
           </div>
           <PopulationGraph
             populations={populations}
+            populationType={populationType}
             prefectures={prefectures}
           />
         </section>

@@ -7,6 +7,7 @@ import { PopulationTransition } from "@/types/Population";
 
 interface PopulationGraphProps {
   populations: PopulationTransition[];
+  populationType: number;
   prefectures: Prefecture[];
 }
 
@@ -17,10 +18,11 @@ interface graphData {
 
 const PopulationGraph = ({
   populations,
+  populationType,
   prefectures,
 }: PopulationGraphProps): JSX.Element => {
   const graphData: graphData[] = populations.reduce((acc: graphData[], current) => {
-    current.data.forEach((item) => {
+    current.populations[populationType].data.forEach((item) => {
       const found = acc.find((el) => el.year === item.year);
       if (found) {
         found[prefectures[current.prefCode - 1].name] = item.value / 10000;
