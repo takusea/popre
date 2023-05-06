@@ -7,7 +7,7 @@ import CheckBox from "@/components/molecules/CheckBox";
 interface PrefectureCheckListProps {
   prefectures: Prefecture[];
   checkedIndexes: number[];
-  onChange: (prefCode: number) => void;
+  onChange: (checked: boolean, prefCode: number) => void;
 }
 
 const PrefectureCheckList = ({
@@ -22,7 +22,7 @@ const PrefectureCheckList = ({
           <CheckBox
             label={prefecture.name}
             checked={checkedIndexes.includes(prefecture.code)}
-            onClick={() => onChange(prefecture.code)}
+            onClick={(checked) => {onChange(checked, prefecture.code)}}
           />
         </li>
       ))}

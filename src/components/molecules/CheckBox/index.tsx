@@ -7,7 +7,7 @@ interface CheckBoxProps {
   label: string;
   checked: boolean;
   disabled?: boolean;
-  onClick: () => void;
+  onClick: (checked: boolean) => void;
 }
 
 const CheckBox = ({
@@ -17,7 +17,7 @@ const CheckBox = ({
   onClick,
 }: CheckBoxProps): JSX.Element => {
   return (
-    <button className={styles.checkbox} onClick={onClick}>
+    <button className={styles.checkbox} onClick={() => onClick(checked)}>
       <CheckIndicator checked={checked} disabled={disabled} />
       <Text>{label}</Text>
     </button>
