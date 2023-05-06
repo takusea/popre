@@ -2,7 +2,7 @@ import Head from "next/head";
 
 import styles from "@/styles/Home.module.css";
 
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 import { fetchPrefectures } from "@/lib/resas";
@@ -19,37 +19,32 @@ interface Props {
 }
 
 export default function Home({ prefectures }: Props) {
-  const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
   const [populations, setPopulations] = useState<PopulationTransition[]>([]);
   const [populationType, setPopulationType] = useState<number>(0);
 
-  const fetchData = useCallback(async () => {
+  const fetchPopulation = async (prefCode: number): Promise<PopulationTransition> => {
     const api = axios.create({
       baseURL: process.env.NEXT_PUBLIC_BASE_URL,
     });
 
-    const pop: PopulationTransition[] = await Promise.all(
-      checkedIndexes.map(async (checkedIndex) => {
-        const response = await api.get(
-          `/population?prefCode=${checkedIndex}&populationType=${populationType}`
-        );
-
-        return response.data;
-      })
+    const response = await api.get(
+      `/population?prefCode=${prefCode}&populationType=${populationType}`
     );
 
-    setPopulations(pop);
-  }, [checkedIndexes, populationType]);
+    return response.data;
+  }
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const togglePopulations = async (prefCode: number) => {
+    const hasPrefecture = populations.some((population) => {
+      return population.prefCode === prefCode
+    });
 
-  const toggleCheckedIndexes = (prefCode: number) => {
-    if (checkedIndexes.includes(prefCode)) {
-      setCheckedIndexes(checkedIndexes.filter((code) => code !== prefCode));
+    if (hasPrefecture) {
+      setPopulations(populations.filter((population) => population.prefCode !== prefCode));
     } else {
-      setCheckedIndexes([...checkedIndexes, prefCode]);
+      const population = await fetchPopulation(prefCode);
+
+      setPopulations([...populations, population]);
     }
   };
 
@@ -70,8 +65,15 @@ export default function Home({ prefectures }: Props) {
           <h2 className={styles.section__heading}>都道府県一覧</h2>
           <PrefectureCheckList
             prefectures={prefectures}
-            checkedIndexes={checkedIndexes}
-            onChange={(prefCode) => toggleCheckedIndexes(prefCode)}
+            onChange={async (checked, prefCode) => {
+              if (checked) {
+                setPopulations(populations.filter((population) => population.prefCode !== prefCode));
+              } else {
+                const population = await fetchPopulation(prefCode);
+
+                setPopulations([...populations, population]);
+              }
+            }}
           />
         </section>
         <section className={styles.section}>
@@ -84,7 +86,6 @@ export default function Home({ prefectures }: Props) {
           </div>
           <PopulationGraph
             populations={populations}
-            checkedIndexes={checkedIndexes}
             prefectures={prefectures}
           />
         </section>
