@@ -57,7 +57,7 @@ export default function Home({ prefectures }: Props) {
               } else {
                 const population = await fetchPopulation(prefCode);
 
-                setPopulations([...populations, population]);
+                setPopulations((prev) => [...prev, population]);
               }
             }}
           />
