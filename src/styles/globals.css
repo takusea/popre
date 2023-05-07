@@ -20,6 +20,11 @@
   --c-icon: var(--c-gray-70);
 }
 
+:focus {
+  outline: auto;
+  outline-offset: 2px;
+}
+
 html {
   scroll-behavior: smooth;
 }
