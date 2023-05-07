@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import PrefectureCheckList from ".";
@@ -30,7 +30,6 @@ describe("components/organisms/PrefectureCheckList", () => {
     const {getByText} = render(
       <PrefectureCheckList
         prefectures={prefectures}
-        checkedIndexes={[0]}
         onChange={()=>{null}}
       />
     );
@@ -40,20 +39,25 @@ describe("components/organisms/PrefectureCheckList", () => {
     })
   });
 
-  it("クリック時にonChange関数が実行されること", async () => {
-    const changedHandler = jest.fn();
+  it("クリック時にcheckedIndexが切り替わること", async () => {
+    const changedHandler = jest.fn((checked: boolean): boolean => checked);
     const user = userEvent.setup();
     const {getAllByRole} = render(
       <PrefectureCheckList
         prefectures={prefectures}
-        checkedIndexes={[0]}
         onChange={changedHandler}
       />
     );
 
     const onChipElements = getAllByRole("button");
-    await user.click(onChipElements[0]);
+    await act(async() => {
+      await user.click(onChipElements[0]);
+      expect(changedHandler.mock.results[0].value).not.toBeTruthy();
+    })
 
-    expect(changedHandler).toHaveBeenCalled();
+    await act(async() => {
+      await user.click(onChipElements[0]);
+      expect(changedHandler.mock.results[1].value).toBeTruthy();
+      })
   });
 });
