@@ -18,21 +18,21 @@ interface Props {
   prefectures: Prefecture[];
 }
 
+const fetchPopulation = async (prefCode: number): Promise<PopulationTransition> => {
+  const api = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  });
+
+  const response = await api.get(
+    `/population?prefCode=${prefCode}`
+  );
+
+  return response.data;
+}
+
 export default function Home({ prefectures }: Props) {
   const [populations, setPopulations] = useState<PopulationTransition[]>([]);
   const [populationType, setPopulationType] = useState<number>(0);
-
-  const fetchPopulation = async (prefCode: number): Promise<PopulationTransition> => {
-    const api = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-    });
-
-    const response = await api.get(
-      `/population?prefCode=${prefCode}`
-    );
-
-    return response.data;
-  }
 
   return (
     <>
