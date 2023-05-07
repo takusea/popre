@@ -18,25 +18,28 @@ const fetchPopulation = async (
 
 export const usePopulations = () => {
   const [caches, setCaches] = useState<PopulationTransition[]>([]);
-  const [prefCodes, setPrefCodes] = useState<number[]>([]);
+  const [fetchedPrefCodes, setFetchedPrefCodes] = useState<number[]>([]);
+  const [checkedPrefCodes, setCheckedPrefCodes] = useState<number[]>([]);
   const populations = caches.filter((cache) =>
-    prefCodes.includes(cache.prefCode)
+    checkedPrefCodes.includes(cache.prefCode)
   );
 
   const addPopulation = useCallback(
     async (prefCode: number): Promise<void> => {
-      setPrefCodes((prev) => [...prev, prefCode]);
+      setCheckedPrefCodes((prev) => [...prev, prefCode]);
 
-      if (!caches.some((cache) => cache.prefCode === prefCode)) {
+      if (!fetchedPrefCodes.includes(prefCode)) {
+        setFetchedPrefCodes((prev) => [...prev, prefCode]);
+
         const population = await fetchPopulation(prefCode);
         setCaches((prev) => [...prev, population]);
       }
     },
-    [caches]
+    [fetchedPrefCodes]
   );
 
   const removePopulation = useCallback((prefCode: number): void => {
-    setPrefCodes((prev) => prev.filter((code) => code !== prefCode));
+    setCheckedPrefCodes((prev) => prev.filter((code) => code !== prefCode));
   }, []);
 
   return { populations, addPopulation, removePopulation };
