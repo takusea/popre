@@ -1,8 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Popre
 
-## Getting Started
+**PO**pulation Trends by **PRE**fecture
 
-First, run the development server:
+RESAS-APIを用いた都道府県別人口推移の情報を表示するWebアプリケーション。
+
+![Animation](https://user-images.githubusercontent.com/53995265/236679668-a526b5f9-b981-4d79-b8bd-38050ddb2ede.gif)
+
+## 特徴
+
+人口推移を見たい都道府県を選択するための都道府県一覧がある。また、見ることができる人口推移の種類には、総人口、年少人口、生産年齢人口、老年人口がある。
+
+## 使い方
+
+ローカルにリポジトリをcloneさせる。
+
+`git clone https://github.com/takusea/popre.git`
+
+webappディレクトリ直下へ移動する。
+
+`cd popre`
+
+以下の環境変数を設定する。
+
+|  名前  |  説明  | 例 |
+| ---- | ---- | ----|
+|  RESAS_API_KEY  |  RESAS-APIのAPIキー  | XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |
+|  NEXT_PUBLIC_BASE_URL  |  Next.jsのAPI RoutesのベースURL  | http://localhost:3000/api |
+
+開発サーバーを起動する。
 
 ```bash
 npm run dev
@@ -12,27 +37,39 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[http://localhost:3000](http://localhost:3000)を開く。
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 主要な使用技術
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 言語
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- TypeScript
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### デプロイサーバー
 
-## Learn More
+- Vercel
 
-To learn more about Next.js, take a look at the following resources:
+### API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- RESAS-API
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Webアプリケーションフレームワーク
 
-## Deploy on Vercel
+- React
+- Next.js
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### データ通信
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Axios
+
+### テスト・動作確認
+
+- Jest
+- React Testing Library
+- Storybook
+
+### コード整形
+
+- Prettier
+- ESLint
+- Stylelint
