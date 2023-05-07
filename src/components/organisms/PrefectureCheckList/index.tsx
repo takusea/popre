@@ -34,7 +34,8 @@ const PrefectureCheckList = ({
             checked={checkedIndexes.includes(prefecture.code)}
             onClick={(checked) => {
               toggleCheckedIndexes(prefecture.code);
-              onChange(checked, prefecture.code)}}
+              onChange(checked, prefecture.code);
+            }}
           />
         </li>
       ))}

@@ -1,15 +1,18 @@
-import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import "@testing-library/jest-dom";
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import Chip from ".";
 
 describe("components/atoms/Chip", () => {
   it("[role=button]であること", () => {
-    const {getByRole} = render(
+    const { getByRole } = render(
       <Chip
-      checked={false}
-      onClick={()=> {null}}>
+        checked={false}
+        onClick={() => {
+          null;
+        }}
+      >
         Test
       </Chip>
     );
@@ -19,10 +22,13 @@ describe("components/atoms/Chip", () => {
 
   it("テキストが表示されること", () => {
     const text = "Test";
-    const {getByText} = render(
+    const { getByText } = render(
       <Chip
-      checked={false}
-      onClick={()=> {null}}>
+        checked={false}
+        onClick={() => {
+          null;
+        }}
+      >
         {text}
       </Chip>
     );
@@ -33,10 +39,8 @@ describe("components/atoms/Chip", () => {
   it("クリック時にonClick関数が実行されること", async () => {
     const clickedHandler = jest.fn();
     const user = userEvent.setup();
-    const {getByRole} = render(
-      <Chip
-      checked={false}
-      onClick={clickedHandler}>
+    const { getByRole } = render(
+      <Chip checked={false} onClick={clickedHandler}>
         Test
       </Chip>
     );

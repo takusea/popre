@@ -22,9 +22,11 @@ export const fetchPrefectures = async (): Promise<Prefecture[]> => {
   );
 
   return prefectures;
-}
+};
 
-export const fetchPopulations = async (prefCode: number): Promise<PopulationTransition> => {
+export const fetchPopulations = async (
+  prefCode: number
+): Promise<PopulationTransition> => {
   const response = await resas.get(
     `/population/composition/perYear?prefCode=${prefCode}`
   );
@@ -37,4 +39,4 @@ export const fetchPopulations = async (prefCode: number): Promise<PopulationTran
   };
 
   return populationTransition;
-}
+};

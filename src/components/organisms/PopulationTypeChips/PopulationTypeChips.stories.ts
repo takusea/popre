@@ -13,6 +13,6 @@ type Story = StoryObj<T>;
 
 export const Default: Story = {
   args: {
-    currentIndex: 0
+    currentIndex: 0,
   },
 };

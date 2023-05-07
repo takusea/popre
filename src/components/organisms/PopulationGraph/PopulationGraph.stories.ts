@@ -17,20 +17,20 @@ export const Default: Story = {
     prefectures: [
       {
         name: "a",
-        code: 0
+        code: 0,
       },
       {
         name: "b",
-        code: 1
+        code: 1,
       },
       {
         name: "c",
-        code: 2
+        code: 2,
       },
       {
         name: "d",
-        code: 3
-      }
+        code: 3,
+      },
     ],
   },
 };

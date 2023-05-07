@@ -1,15 +1,17 @@
-import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import "@testing-library/jest-dom";
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import PopulationTypeChips from ".";
 
 describe("components/organisms/PopulationTypeChips", () => {
   it("すべての種類のChipがあること", () => {
-    const {getByText} = render(
+    const { getByText } = render(
       <PopulationTypeChips
         currentIndex={0}
-        onChange={()=>{null}}
+        onChange={() => {
+          null;
+        }}
       />
     );
 
@@ -17,18 +19,14 @@ describe("components/organisms/PopulationTypeChips", () => {
 
     populationTypes.forEach((populationType) => {
       expect(getByText(populationType)).toBeInTheDocument();
-    })
-
+    });
   });
 
   it("クリック時にonChange関数が実行されること", async () => {
     const changedHandler = jest.fn();
     const user = userEvent.setup();
-    const {getAllByRole} = render(
-      <PopulationTypeChips
-        currentIndex={0}
-        onChange={changedHandler}
-      />
+    const { getAllByRole } = render(
+      <PopulationTypeChips currentIndex={0} onChange={changedHandler} />
     );
 
     const onChipElements = getAllByRole("button");
