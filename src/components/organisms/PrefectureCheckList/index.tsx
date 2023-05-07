@@ -17,7 +17,7 @@ const PrefectureCheckList = ({
 }: PrefectureCheckListProps): JSX.Element => {
   const [checkedIndexes, setCheckedIndexes] = useState<number[]>([]);
 
-  const toggleCheckedIndexes = async (prefCode: number) => {
+  const toggleCheckedIndexes = (prefCode: number) => {
     if (checkedIndexes.includes(prefCode)) {
       setCheckedIndexes((prev) => prev.filter((code) => code !== prefCode));
     } else {
