@@ -1,6 +1,6 @@
 import { testApiHandler } from "next-test-api-route-handler";
 
-import handler from "./population";
+import handler from "@/pages/api/population";
 
 describe("/pages/api/population", () => {
   it("400:非数", async () => {

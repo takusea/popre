@@ -1,6 +1,6 @@
 import { testApiHandler } from "next-test-api-route-handler";
 
-import handler from "./prefecture";
+import handler from "@/pages/api/prefecture";
 
 describe("/pages/api/prefecture", () => {
   it("200", async () => {
