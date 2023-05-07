@@ -17,7 +17,7 @@ const CheckBox = ({
   onClick,
 }: CheckBoxProps): JSX.Element => {
   return (
-    <button className={styles.checkbox} onClick={() => onClick(checked)}>
+    <button className={styles.checkbox} onClick={() => onClick(!checked)}>
       <CheckIndicator checked={checked} disabled={disabled} />
       <Text>{label}</Text>
     </button>

@@ -51,15 +51,15 @@ describe("components/organisms/PrefectureCheckList", () => {
       />
     );
 
-    const onChipElements = getAllByRole("button");
+    const prefectureCheckList = getAllByRole("button");
     await act(async () => {
-      await user.click(onChipElements[0]);
-      expect(changedHandler.mock.results[0].value).not.toBeTruthy();
+      await user.click(prefectureCheckList[0]);
+      expect(changedHandler.mock.results[0].value).toBeTruthy();
     });
 
     await act(async () => {
-      await user.click(onChipElements[0]);
-      expect(changedHandler.mock.results[1].value).toBeTruthy();
+      await user.click(prefectureCheckList[0]);
+      expect(changedHandler.mock.results[1].value).not.toBeTruthy();
     });
   });
 });
