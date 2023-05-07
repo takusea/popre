@@ -19,9 +19,9 @@ const PrefectureCheckList = ({
 
   const toggleCheckedIndexes = async (prefCode: number) => {
     if (checkedIndexes.includes(prefCode)) {
-      setCheckedIndexes(checkedIndexes.filter((code) => code !== prefCode));
+      setCheckedIndexes((prev) => prev.filter((code) => code !== prefCode));
     } else {
-      setCheckedIndexes([...checkedIndexes, prefCode]);
+      setCheckedIndexes((prev) => [...prev, prefCode]);
     }
   };
 
