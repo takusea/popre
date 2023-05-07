@@ -25,7 +25,7 @@ const prefectures: Prefecture[] = [
   }
 ]
 
-describe("components/molecules/PrefectureCheckList", () => {
+describe("components/organisms/PrefectureCheckList", () => {
   it("すべての都道府県が表示されていること", () => {
     const {getByText} = render(
       <PrefectureCheckList

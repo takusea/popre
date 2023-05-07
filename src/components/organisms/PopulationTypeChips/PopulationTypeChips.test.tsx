@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import PopulationTypeChips from ".";
 
-describe("components/molecules/PopulationTypeChips", () => {
+describe("components/organisms/PopulationTypeChips", () => {
   it("すべての種類のChipがあること", () => {
     const {getByText} = render(
       <PopulationTypeChips
