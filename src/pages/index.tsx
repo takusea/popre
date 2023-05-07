@@ -3,11 +3,10 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 
 import { useState } from "react";
-import axios from "axios";
 
 import { fetchPrefectures } from "@/lib/resas";
 import { Prefecture } from "@/types/Prefecture";
-import { PopulationTransition } from "@/types/Population";
+import { usePopulations } from "@/hooks/usePopulations";
 
 import Header from "@/components/organisms/Header";
 import PrefectureCheckList from "@/components/organisms/PrefectureCheckList";
@@ -18,20 +17,8 @@ interface Props {
   prefectures: Prefecture[];
 }
 
-const fetchPopulation = async (
-  prefCode: number
-): Promise<PopulationTransition> => {
-  const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  });
-
-  const response = await api.get(`/population?prefCode=${prefCode}`);
-
-  return response.data;
-};
-
 export default function Home({ prefectures }: Props) {
-  const [populations, setPopulations] = useState<PopulationTransition[]>([]);
+  const { populations, addPopulation, removePopulation } = usePopulations();
   const [populationType, setPopulationType] = useState<number>(0);
 
   return (
@@ -51,17 +38,11 @@ export default function Home({ prefectures }: Props) {
           <h2 className={styles.section__heading}>都道府県一覧</h2>
           <PrefectureCheckList
             prefectures={prefectures}
-            onChange={async (checked, prefCode) => {
+            onChange={(checked, prefCode) => {
               if (checked) {
-                setPopulations(
-                  populations.filter(
-                    (population) => population.prefCode !== prefCode
-                  )
-                );
+                addPopulation(prefCode);
               } else {
-                const population = await fetchPopulation(prefCode);
-
-                setPopulations((prev) => [...prev, population]);
+                removePopulation(prefCode);
               }
             }}
           />
