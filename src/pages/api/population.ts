@@ -18,32 +18,26 @@ export default async function handler(
   const prefCode = Number(req.query.prefCode);
 
   if (isNaN(prefCode)) {
-    return res
-      .status(400)
-      .json({
-        error: {
-          code: 400,
-          title: "Bad Request",
-          message: "prefCodeは数値を指定してください。",
-        },
-      });
+    return res.status(400).json({
+      error: {
+        code: 400,
+        title: "Bad Request",
+        message: "prefCodeは数値を指定してください。",
+      },
+    });
   }
 
   if (prefCode <= 0 || prefCode > 47) {
-    return res
-      .status(400)
-      .json({
-        error: {
-          code: 400,
-          title: "Bad Request",
-          message: "prefCodeは1から47の範囲を指定してください。",
-        },
-      });
+    return res.status(400).json({
+      error: {
+        code: 400,
+        title: "Bad Request",
+        message: "prefCodeは1から47の範囲を指定してください。",
+      },
+    });
   }
 
-  const populationTransition: PopulationTransition = await fetchPopulations(
-    prefCode
-  );
+  const populationTransition = await fetchPopulations(prefCode);
 
   return res.status(200).json(populationTransition);
 }
