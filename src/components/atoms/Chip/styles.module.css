@@ -8,9 +8,21 @@
   background-color: var(--c-primary-light);
   border: 1px solid var(--c-primary);
   border-radius: 20px;
+  transition: width 0.1s, background-color 0.1s;
 }
 
 .chip.is_checked {
   color: var(--c-white);
   background-color: var(--c-primary);
+}
+
+.chip__check {
+  margin: 0 -16px;
+  opacity: 0;
+  transition: margin 0.1s, opacity 0.1s;
+}
+
+.chip.is_checked > .chip__check {
+  margin: 0;
+  opacity: 1;
 }

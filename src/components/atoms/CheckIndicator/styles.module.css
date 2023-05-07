@@ -10,6 +10,7 @@
   background-color: var(--c-white);
   border: 1px solid var(--c-border);
   border-radius: 4px;
+  transition: background-color 0.1s;
 }
 
 .check_indicator.is_disabled {
